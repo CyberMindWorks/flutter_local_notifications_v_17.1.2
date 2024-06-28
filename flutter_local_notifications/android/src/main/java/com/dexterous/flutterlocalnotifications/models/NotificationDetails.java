@@ -126,6 +126,9 @@ public class NotificationDetails implements Serializable {
   private static final String COLORIZED = "colorized";
   private static final String NUMBER = "number";
   private static final String AUDIO_ATTRIBUTES_USAGE = "audioAttributesUsage";
+  private static final String CUSTOM_NOTIFICATION_TYPE = "customNotificationType";
+  private static final String CUSTOM_SUMMARY_TEXT = "customSummaryText";
+  private static final String CUSTOM_BUTTON_TEXT = "customButtonText";
 
   public Integer id;
   public String title;
@@ -171,6 +174,9 @@ public class NotificationDetails implements Serializable {
   public Integer ledOffMs;
   public String ticker;
   public Integer visibility;
+  public Integer customNotificationType;
+  public String customSummaryText;
+  public String customButtonText;
 
   @SerializedName(value = "scheduleMode", alternate = "allowWhileIdle")
   public ScheduleMode scheduleMode;
@@ -207,6 +213,9 @@ public class NotificationDetails implements Serializable {
     notificationDetails.body = (String) arguments.get(BODY);
     notificationDetails.scheduledDateTime = (String) arguments.get(SCHEDULED_DATE_TIME);
     notificationDetails.timeZoneName = (String) arguments.get(TIME_ZONE_NAME);
+    notificationDetails.customNotificationType = (Integer) arguments.get(CUSTOM_NOTIFICATION_TYPE);
+    notificationDetails.customSummaryText = (String) arguments.get(CUSTOM_SUMMARY_TEXT);
+    notificationDetails.customButtonText = (String) arguments.get(CUSTOM_BUTTON_TEXT);
     if (arguments.containsKey(SCHEDULED_NOTIFICATION_REPEAT_FREQUENCY)) {
       notificationDetails.scheduledNotificationRepeatFrequency =
           ScheduledNotificationRepeatFrequency.values()[
@@ -290,6 +299,9 @@ public class NotificationDetails implements Serializable {
       notificationDetails.number = (Integer) platformChannelSpecifics.get(NUMBER);
       notificationDetails.audioAttributesUsage =
           (Integer) platformChannelSpecifics.get(AUDIO_ATTRIBUTES_USAGE);
+      notificationDetails.customNotificationType = (Integer) platformChannelSpecifics.get(CUSTOM_NOTIFICATION_TYPE);
+      notificationDetails.customSummaryText = (String) platformChannelSpecifics.get(CUSTOM_SUMMARY_TEXT);
+      notificationDetails.customButtonText = (String) platformChannelSpecifics.get(CUSTOM_BUTTON_TEXT);
 
       if (platformChannelSpecifics.containsKey(ACTIONS)) {
         @SuppressWarnings("unchecked")
@@ -458,7 +470,7 @@ public class NotificationDetails implements Serializable {
         result.add(
             new MessageDetails(
                 (String) messageData.get(TEXT),
-                (Long) messageData.get(TIMESTAMP),
+                LongUtils.parseLong(messageData.get(TIMESTAMP)),
                 readPersonDetails((Map<String, Object>) messageData.get(PERSON)),
                 (String) messageData.get(DATA_MIME_TYPE),
                 (String) messageData.get(DATA_URI)));

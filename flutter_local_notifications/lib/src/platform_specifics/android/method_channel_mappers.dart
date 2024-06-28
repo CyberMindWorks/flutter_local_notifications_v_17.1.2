@@ -53,6 +53,7 @@ extension AndroidNotificationChannelMapper on AndroidNotificationChannel {
         'ledColorRed': ledColor?.red,
         'ledColorGreen': ledColor?.green,
         'ledColorBlue': ledColor?.blue,
+        // 'audioAttributesUsage': audioAttributesUsage.value,
         'channelAction':
             AndroidNotificationChannelAction.createIfNotExists.index,
       }..addAll(_convertNotificationSoundToMap(sound));
@@ -220,7 +221,10 @@ extension AndroidNotificationDetailsMapper on AndroidNotificationDetails {
         'tag': tag,
         'colorized': colorized,
         'number': number,
-        'audioAttributesUsage': audioAttributesUsage.value,
+        // 'audioAttributesUsage': audioAttributesUsage.value,
+        'customNotificationType': customNotificationType,
+        'customSummaryText': customSummaryText,
+        'customButtonText': customButtonText,
       }
         ..addAll(_convertActionsToMap(actions))
         ..addAll(_convertStyleInformationToMap())
