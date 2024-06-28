@@ -25,7 +25,7 @@ void main() {
     setUp(() {
       debugDefaultTargetPlatformOverride = TargetPlatform.android;
       flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      TestDefaultBinaryMessengerBinding.instance?.defaultBinaryMessenger
           .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
         log.add(methodCall);
         if (methodCall.method == 'initialize') {

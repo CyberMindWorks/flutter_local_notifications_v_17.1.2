@@ -2598,7 +2598,7 @@ class _HomePageState extends State<HomePage> {
     } else if (Platform.isIOS) {
       final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       final IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      final List<String> fullVersion = iosInfo.systemVersion.split('.');
+      final List<String> fullVersion = iosInfo.systemVersion?.split('.') ?? [];
       if (fullVersion.isNotEmpty) {
         final int? version = int.tryParse(fullVersion[0]);
         if (version != null && version < 10) {
@@ -2818,7 +2818,8 @@ class _HomePageState extends State<HomePage> {
                         'showBadge: ${channel.showBadge}\n'
                         'enableLights: ${channel.enableLights}\n'
                         'ledColor: ${channel.ledColor}\n'
-                        'audioAttributesUsage: ${channel.audioAttributesUsage}\n'),
+                        // 'audioAttributesUsage: ${channel.audioAttributesUsage}\n',
+                        ),
                     const Divider(color: Colors.black),
                   ],
                 ),
