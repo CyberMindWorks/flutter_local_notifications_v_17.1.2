@@ -2178,12 +2178,12 @@ public class FlutterLocalNotificationsPlugin
       channelPayload.put("vibrationPattern", channel.getVibrationPattern());
       channelPayload.put("enableLights", channel.shouldShowLights());
       channelPayload.put("ledColor", channel.getLightColor());
-      // final AudioAttributes audioAttributes = channel.getAudioAttributes();
-      // channelPayload.put(
-      //     "audioAttributesUsage",
-      //     audioAttributes == null
-      //         ? AudioAttributes.USAGE_NOTIFICATION
-      //         : audioAttributes.getUsage());
+      final AudioAttributes audioAttributes = channel.getAudioAttributes();
+      channelPayload.put(
+          "audioAttributesUsage",
+          audioAttributes == null
+              ? AudioAttributes.USAGE_NOTIFICATION
+              : audioAttributes.getUsage());
     }
     return channelPayload;
   }
