@@ -146,6 +146,9 @@ class AndroidNotificationDetails {
     this.colorized = false,
     this.number,
     this.audioAttributesUsage = AudioAttributesUsage.notification,
+    this.customNotificationType,
+    this.customSummaryText,
+    this.customButtonText,
   });
 
   /// The icon that should be used when displaying the notification.
@@ -153,6 +156,16 @@ class AndroidNotificationDetails {
   /// When this is set to `null`, the default icon given to
   /// [AndroidInitializationSettings.defaultIcon] will be used.
   final String? icon;
+
+  /// This should be number between 1 and 4
+  /// Used to denote the type of custom notification to show
+  final int? customNotificationType;
+
+  /// Used to denote the custom summary text
+  final String? customSummaryText;
+
+  /// Used to denote the custom button text
+  final String? customButtonText;
 
   /// The channel's id.
   ///

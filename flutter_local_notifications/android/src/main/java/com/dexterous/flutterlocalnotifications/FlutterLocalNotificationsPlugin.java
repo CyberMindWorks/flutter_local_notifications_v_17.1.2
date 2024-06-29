@@ -33,6 +33,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
@@ -101,6 +102,7 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
+import com.dexterous.flutterlocalnotifications.R;
 
 interface PermissionRequestListener {
   void complete(boolean granted);
@@ -243,6 +245,87 @@ public class FlutterLocalNotificationsPlugin
     }
   }
 
+// get custom notification from customnotificationtype
+  private static RemoteViews getCustomNotification(Context context, NotificationDetails notificationDetails) {
+    BigPictureStyleInformation bigPictureStyleInformation =(BigPictureStyleInformation) notificationDetails.styleInformation;
+      if (notificationDetails.customNotificationType == 1) {
+        RemoteViews custom_notification_type_1 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_1);
+        custom_notification_type_1.setImageViewBitmap(R.id.image, getBitmapFromSource(context, bigPictureStyleInformation.bigPicture, bigPictureStyleInformation.bigPictureBitmapSource));
+        custom_notification_type_1.setImageViewResource(R.id.logo, R.drawable.unitecol_logo);
+        custom_notification_type_1.setTextViewText(R.id.title, notificationDetails.title);
+        custom_notification_type_1.setTextViewText(R.id.logoTitle, "Unitecol");
+        custom_notification_type_1.setTextViewText(R.id.logoText, notificationDetails.customSummaryText != null ? notificationDetails.customSummaryText : "");
+
+        return custom_notification_type_1;
+      }
+
+      if (notificationDetails.customNotificationType == 2) {
+        RemoteViews custom_notification_type_2 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_2);
+        custom_notification_type_2.setTextViewText(R.id.title, notificationDetails.title);
+        return custom_notification_type_2;
+      }
+
+      if (notificationDetails.customNotificationType == 5) {
+        RemoteViews custom_notification_type_5 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_5);
+        custom_notification_type_5.setTextViewText(R.id.title, notificationDetails.title);
+        return custom_notification_type_5;
+      }
+
+      if (notificationDetails.customNotificationType == 6) {
+        RemoteViews custom_notification_type_6 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_6);
+        custom_notification_type_6.setTextViewText(R.id.title, notificationDetails.title);
+        return custom_notification_type_6;
+      }
+
+      if (notificationDetails.customNotificationType == 7) {
+        RemoteViews custom_notification_type_7 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_7);
+        custom_notification_type_7.setTextViewText(R.id.title, notificationDetails.title);
+        return custom_notification_type_7;
+      }
+
+      if (notificationDetails.customNotificationType == 3) {
+        RemoteViews custom_notification_type_3 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_3);
+        custom_notification_type_3.setImageViewBitmap(R.id.image, getBitmapFromSource(context, bigPictureStyleInformation.bigPicture, bigPictureStyleInformation.bigPictureBitmapSource));
+        custom_notification_type_3.setTextViewText(R.id.title, notificationDetails.title);
+        custom_notification_type_3.setTextViewText(R.id.button, notificationDetails.customButtonText != null ? notificationDetails.customButtonText : "");
+        return custom_notification_type_3;
+      }
+
+      if (notificationDetails.customNotificationType == 8) {
+        RemoteViews custom_notification_type_8 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_8);
+        custom_notification_type_8.setImageViewBitmap(R.id.image, getBitmapFromSource(context, bigPictureStyleInformation.bigPicture, bigPictureStyleInformation.bigPictureBitmapSource));
+        custom_notification_type_8.setTextViewText(R.id.title, notificationDetails.title);
+        custom_notification_type_8.setTextViewText(R.id.button, notificationDetails.customButtonText != null ? notificationDetails.customButtonText : "");
+        return custom_notification_type_8;
+      }
+
+      if (notificationDetails.customNotificationType == 9) {
+        RemoteViews custom_notification_type_9 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_9);
+        custom_notification_type_9.setImageViewBitmap(R.id.image, getBitmapFromSource(context, bigPictureStyleInformation.bigPicture, bigPictureStyleInformation.bigPictureBitmapSource));
+        custom_notification_type_9.setTextViewText(R.id.title, notificationDetails.title);
+        custom_notification_type_9.setTextViewText(R.id.button, notificationDetails.customButtonText != null ? notificationDetails.customButtonText : "");
+        return custom_notification_type_9;
+      }
+
+      if (notificationDetails.customNotificationType == 10) {
+        RemoteViews custom_notification_type_10 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_10);
+        custom_notification_type_10.setImageViewBitmap(R.id.image, getBitmapFromSource(context, bigPictureStyleInformation.bigPicture, bigPictureStyleInformation.bigPictureBitmapSource));
+        custom_notification_type_10.setTextViewText(R.id.title, notificationDetails.title);
+        custom_notification_type_10.setTextViewText(R.id.button, notificationDetails.customButtonText != null ? notificationDetails.customButtonText : "");
+        return custom_notification_type_10;
+      }
+
+
+      if (notificationDetails.customNotificationType == 4) {
+        RemoteViews custom_notification_type_4 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_4);
+        custom_notification_type_4.setImageViewBitmap(R.id.image, getBitmapFromSource(context, bigPictureStyleInformation.bigPicture, bigPictureStyleInformation.bigPictureBitmapSource));
+        return custom_notification_type_4;
+      }
+
+    return null;
+  }
+
+
   protected static Notification createNotification(
       Context context, NotificationDetails notificationDetails) {
     NotificationChannelDetails notificationChannelDetails =
@@ -258,28 +341,47 @@ public class FlutterLocalNotificationsPlugin
     if (VERSION.SDK_INT >= VERSION_CODES.M) {
       flags |= PendingIntent.FLAG_IMMUTABLE;
     }
-    PendingIntent pendingIntent =
-        PendingIntent.getActivity(context, notificationDetails.id, intent, flags);
-    DefaultStyleInformation defaultStyleInformation =
-        (DefaultStyleInformation) notificationDetails.styleInformation;
-    NotificationCompat.Builder builder =
-        new NotificationCompat.Builder(context, notificationDetails.channelId)
-            .setContentTitle(
-                defaultStyleInformation.htmlFormatTitle
-                    ? fromHtml(notificationDetails.title)
-                    : notificationDetails.title)
-            .setContentText(
-                defaultStyleInformation.htmlFormatBody
-                    ? fromHtml(notificationDetails.body)
-                    : notificationDetails.body)
+    RemoteViews custom_notification_type_1 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_1);
+    // custom_notification_type_1.setImageViewResource(R.id.image, R.drawable.sample);
+    // custom_notification_type_1.setImageViewResource(R.id.logo, R.drawable.logo);
+    custom_notification_type_1.setTextViewText(R.id.title, "இன்றைய சந்தை (பயிர்/காய்கறி) விலை உங்களுக்காக 🔥🔥🔥🔥 இன்றைய சந்தை (பயிர்/காய்கறி) விலை உங்களுக்காக 🔥🔥🔥🔥 இன்றைய சந்தை (பயிர்/காய்கறி) விலை உங்களுக்காக 🔥🔥🔥🔥");
+    // custom_notification_type_1.setTextViewText(R.id.button, "Apply loan");
+    custom_notification_type_1.setTextViewText(R.id.logoTitle, "Farmyngclub");
+    custom_notification_type_1.setTextViewText(R.id.logoText, "Weather Indicator");
+    BigPictureStyleInformation bigPictureStyleInformation =
+            (BigPictureStyleInformation) notificationDetails.styleInformation;
+       RemoteViews custom_notification_type_2 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_2);
+      // custom_notification_type_2.setImageViewBitmap(R.id.image, getBitmapFromSource(context, bigPictureStyleInformation.bigPicture, bigPictureStyleInformation.bigPictureBitmapSource));
+       custom_notification_type_2.setTextViewText(R.id.title, "இன்றைய சந்தை (பயிர்/காய்கறி) விலை உங்களுக்காக 🔥🔥🔥🔥");
+           RemoteViews custom_notification_type_3 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_3);
+          //  custom_notification_type_3.setImageViewResource(R.id.image, R.drawable.sample);
+    custom_notification_type_3.setTextViewText(R.id.title, "இன்றைய சந்தை (பயிர்/காய்கறி) விலை உங்களுக்காக 🔥🔥🔥🔥 இன்றைய சந்தை (பயிர்/காய்கறி) விலை உங்களுக்காக 🔥🔥🔥🔥 இன்றைய சந்தை (பயிர்/காய்கறி) விலை உங்களுக்காக 🔥🔥🔥🔥");
+    // custom_notification_type_3.setTextViewText(R.id.button, "Apply loan");
+
+    RemoteViews custom_notification_type_4 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_4);
+    custom_notification_type_4.setImageViewBitmap(R.id.image, getBitmapFromSource(context, bigPictureStyleInformation.bigPicture, bigPictureStyleInformation.bigPictureBitmapSource));
+
+    System.out.println(notificationDetails.id);
+
+    PendingIntent pendingIntent = PendingIntent.getActivity(context, notificationDetails.id, intent, flags);
+    DefaultStyleInformation defaultStyleInformation = (DefaultStyleInformation) notificationDetails.styleInformation;
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(context, notificationDetails.channelId)
+            .setContentTitle(defaultStyleInformation.htmlFormatTitle ? fromHtml(notificationDetails.title) : notificationDetails.title)
+            .setContentText(defaultStyleInformation.htmlFormatBody ? fromHtml(notificationDetails.body) : notificationDetails.body)
             .setTicker(notificationDetails.ticker)
             .setAutoCancel(BooleanUtils.getValue(notificationDetails.autoCancel))
             .setContentIntent(pendingIntent)
             .setPriority(notificationDetails.priority)
             .setOngoing(BooleanUtils.getValue(notificationDetails.ongoing))
-            .setSilent(BooleanUtils.getValue(notificationDetails.silent))
+            
+            //  .setCustomContentView( notificationDetails.id == 1 ? custom_notification_type_1 : notificationDetails.id == 2 ? custom_notification_type_2 : notificationDetails.id == 3 ? custom_notification_type_3 : custom_notification_type_4 )
+            // .setCustomBigContentView( notificationDetails.id == 1 ? custom_notification_type_1 : notificationDetails.id == 2 ? custom_notification_type_2 : notificationDetails.id == 3 ? custom_notification_type_3 : custom_notification_type_4 )
+            // .setSilent(BooleanUtils.getValue(notificationDetails.silent))
             .setOnlyAlertOnce(BooleanUtils.getValue(notificationDetails.onlyAlertOnce));
-
+    if (notificationDetails.customNotificationType != null) {
+        builder.setCustomContentView(getCustomNotification(context, notificationDetails));
+        builder.setCustomBigContentView(getCustomNotification(context, notificationDetails));
+    }
     if (notificationDetails.actions != null) {
       // Space out request codes by 16 so even with 16 actions they won't clash
       int requestCode = notificationDetails.id * 16;
@@ -362,9 +464,7 @@ public class FlutterLocalNotificationsPlugin
     }
 
     setSmallIcon(context, notificationDetails, builder);
-    builder.setLargeIcon(
-        getBitmapFromSource(
-            context, notificationDetails.largeIcon, notificationDetails.largeIconBitmapSource));
+    builder.setLargeIcon(getBitmapFromSource(context, notificationDetails.largeIcon, notificationDetails.largeIconBitmapSource));
     if (notificationDetails.color != null) {
       builder.setColor(notificationDetails.color.intValue());
     }
@@ -412,7 +512,7 @@ public class FlutterLocalNotificationsPlugin
     setSound(context, notificationDetails, builder);
     setVibrationPattern(notificationDetails, builder);
     setLights(notificationDetails, builder);
-    setStyle(context, notificationDetails, builder);
+    // setStyle(context, notificationDetails, builder);
     setProgress(notificationDetails, builder);
     setCategory(notificationDetails, builder);
     setTimeoutAfter(notificationDetails, builder);
@@ -451,21 +551,22 @@ public class FlutterLocalNotificationsPlugin
       Context context,
       NotificationDetails notificationDetails,
       NotificationCompat.Builder builder) {
-    if (!StringUtils.isNullOrEmpty(notificationDetails.icon)) {
-      builder.setSmallIcon(getDrawableResourceId(context, notificationDetails.icon));
-    } else {
-      SharedPreferences sharedPreferences =
-          context.getSharedPreferences(SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
-      String defaultIcon = sharedPreferences.getString(DEFAULT_ICON, null);
-      if (StringUtils.isNullOrEmpty(defaultIcon)) {
-        // for backwards compatibility: this is for handling the old way references to the icon used
-        // to be kept but should be removed in future
-        builder.setSmallIcon(notificationDetails.iconResourceId);
+      builder.setSmallIcon(R.drawable.unitecol_logo);
+    // if (!StringUtils.isNullOrEmpty(notificationDetails.icon)) {
+    //   builder.setSmallIcon(getDrawableResourceId(context, notificationDetails.icon));
+    // } else {
+    //   SharedPreferences sharedPreferences =
+    //       context.getSharedPreferences(SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+    //   String defaultIcon = sharedPreferences.getString(DEFAULT_ICON, null);
+    //   if (StringUtils.isNullOrEmpty(defaultIcon)) {
+    //     // for backwards compatibility: this is for handling the old way references to the icon used
+    //     // to be kept but should be removed in future
+    //     builder.setSmallIcon(notificationDetails.iconResourceId);
 
-      } else {
-        builder.setSmallIcon(getDrawableResourceId(context, defaultIcon));
-      }
-    }
+    //   } else {
+    //     builder.setSmallIcon(getDrawableResourceId(context, defaultIcon));
+    //   }
+    // }
   }
 
   @NonNull
@@ -900,10 +1001,7 @@ public class FlutterLocalNotificationsPlugin
   private static void applyGrouping(
       NotificationDetails notificationDetails, NotificationCompat.Builder builder) {
     boolean isGrouped = false;
-    if (!StringUtils.isNullOrEmpty(notificationDetails.groupKey)) {
-      builder.setGroup(notificationDetails.groupKey);
-      isGrouped = true;
-    }
+    builder.setGroup(notificationDetails.id.toString());
 
     if (isGrouped) {
       if (BooleanUtils.getValue(notificationDetails.setAsGroupSummary)) {
@@ -1182,7 +1280,7 @@ public class FlutterLocalNotificationsPlugin
               notificationChannelDetails.name,
               notificationChannelDetails.importance);
       notificationChannel.setDescription(notificationChannelDetails.description);
-      notificationChannel.setGroup(notificationChannelDetails.groupId);
+      // notificationChannel.setGroup(notificationChannelDetails.groupId);
       if (notificationChannelDetails.playSound) {
         Integer audioAttributesUsage =
             notificationChannelDetails.audioAttributesUsage != null
