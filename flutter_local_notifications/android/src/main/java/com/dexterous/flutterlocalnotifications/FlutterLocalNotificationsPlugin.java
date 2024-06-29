@@ -251,9 +251,9 @@ public class FlutterLocalNotificationsPlugin
       if (notificationDetails.customNotificationType == 1) {
         RemoteViews custom_notification_type_1 = new RemoteViews(context.getPackageName(), R.layout.custom_notification_1);
         custom_notification_type_1.setImageViewBitmap(R.id.image, getBitmapFromSource(context, bigPictureStyleInformation.bigPicture, bigPictureStyleInformation.bigPictureBitmapSource));
-        custom_notification_type_1.setImageViewResource(R.id.logo, R.drawable.farmyng_logo);
+        custom_notification_type_1.setImageViewResource(R.id.logo, R.drawable.unitecol_logo);
         custom_notification_type_1.setTextViewText(R.id.title, notificationDetails.title);
-        custom_notification_type_1.setTextViewText(R.id.logoTitle, "ஃபார்மிங் கிளப்");
+        custom_notification_type_1.setTextViewText(R.id.logoTitle, "Unitecol");
         custom_notification_type_1.setTextViewText(R.id.logoText, notificationDetails.customSummaryText != null ? notificationDetails.customSummaryText : "");
 
         return custom_notification_type_1;
@@ -551,7 +551,7 @@ public class FlutterLocalNotificationsPlugin
       Context context,
       NotificationDetails notificationDetails,
       NotificationCompat.Builder builder) {
-      builder.setSmallIcon(R.drawable.farmyng_logo);
+      builder.setSmallIcon(R.drawable.unitecol_logo);
     // if (!StringUtils.isNullOrEmpty(notificationDetails.icon)) {
     //   builder.setSmallIcon(getDrawableResourceId(context, notificationDetails.icon));
     // } else {
